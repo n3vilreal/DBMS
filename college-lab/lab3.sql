@@ -75,3 +75,26 @@ select * from students where phone_number='555-0103';
 ALTER TABLE students ADD address VARCHAR(255);
 ALTER TABLE students ADD is_active BOOLEAN DEFAULT TRUE;
 ALTER TABLE students MODIFY COLUMN phone_number VARCHAR(50);
+ALTER TABLE courses RENAME COLUMN name to course_name;
+ALTER TABLE students DROP COLUMN age;
+ALTER TABLE courses ADD CONSTRAINT check_credit_hour CHECK (credit_hour >= 1);
+UPDATE students set phone_number = "555-9999" where student_id = 1;
+UPDATE students set email = "bob.j@newemail.com" where student_id = 2; -- Age column deleted i line 80
+UPDATE courses set credit_hour = credit_hour + 1 WHERE credit_hour = 3;
+UPDATE students set email = LOWER(email);
+UPDATE courses set credit_hour = 5 WHERE course_name = "Data Structures";
+DELETE FROM enrollment WHERE student_id = 5;
+DELETE FROM students WHERE name = "Evan Wright";
+DELETE FROM courses WHERE credit_hour < 3;
+DELETE FROM enrollment WHERE student_id = 3;
+DELETE FROM students WHERE student_id = 3;
+TRUNCATE TABLE enrollment;
+
+-- Aggregate Functions
+SELECT count(*) FROM students;
+    -- Age column deleted, average cannot be calculated
+SELECT MAX(credit_hour) from courses;
+    -- Age column deleted, average cannot be calculated
+SELECT SUM(credit_hour) FROM courses;
+
+-- Grouping Data
