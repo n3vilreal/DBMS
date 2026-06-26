@@ -63,7 +63,7 @@ INSERT INTO enrollment (enrollment_id, course_id, student_id) VALUES
 -- part 2: sql practice questions
 
 -- basic selection and filtering
-SELECT * from students;
+SELECT * from enrollment;
 select name, email from students;
 select * from students where age>20;
 SELECT * from students where name like 'a%';
@@ -77,10 +77,9 @@ ALTER TABLE students ADD is_active BOOLEAN DEFAULT TRUE;
 ALTER TABLE students MODIFY COLUMN phone_number VARCHAR(50);
 ALTER TABLE courses RENAME COLUMN name to course_name;
 ALTER TABLE students DROP COLUMN age;
-ALTER TABLE courses ADD CONSTRAINT check_credit_hour CHECK (credit_hour >= 1);
+ALTER TABLE courses ADD CONSTRAINT check_credit_hour CHECK (3);
 UPDATE students set phone_number = "555-9999" where student_id = 1;
-UPDATE students set email = "bob.j@newemail.com" where student_id = 2; -- Age column deleted i line 80
-UPDATE courses set credit_hour = credit_hour + 1 WHERE credit_hour = 3;
+UPDATE students set email = "bob.j@newemail.com", age = 23 where student_id = 2;
 UPDATE students set email = LOWER(email);
 UPDATE courses set credit_hour = 5 WHERE course_name = "Data Structures";
 DELETE FROM enrollment WHERE student_id = 5;
@@ -89,12 +88,24 @@ DELETE FROM courses WHERE credit_hour < 3;
 DELETE FROM enrollment WHERE student_id = 3;
 DELETE FROM students WHERE student_id = 3;
 TRUNCATE TABLE enrollment;
-
 -- Aggregate Functions
 SELECT count(*) FROM students;
-    -- Age column deleted, average cannot be calculated
 SELECT MAX(credit_hour) from courses;
-    -- Age column deleted, average cannot be calculated
 SELECT SUM(credit_hour) FROM courses;
 
+-- for rearranging tables
+DROP TABLE enrollment;
+DROP TABLE students;
+DROP TABLE courses;
+
 -- Grouping Data
+SELECT count(*), course_id FROM students JOIN enrollment on students.student_id = enrollment.student_id
+GROUP BY enrollment.course_id;
+SELECT student_id, COUNT(course_id) FROM enrollment GROUP BY student_id;
+SELECT student_id, COUNT(course_id) FROM enrollment GROUP BY student_id HAVING COUNT(student_id) > 2;
+SELECT student_id, COUNT(course_id) FROM enrollment GROUP BY student_id HAVING COUNT(student_id) = 2;
+
+-- Table relations and join
+
+
+
