@@ -106,6 +106,8 @@ SELECT student_id, COUNT(course_id) FROM enrollment GROUP BY student_id HAVING C
 SELECT student_id, COUNT(course_id) FROM enrollment GROUP BY student_id HAVING COUNT(student_id) = 2;
 
 -- Table relations and join
-
-
-
+SELECT students.name, enrollment.course_id FROM students JOIN enrollment on students.student_id = enrollment.student_id;
+SELECT students.name, courses.name FROM students JOIN enrollment ON students.student_id = enrollment.student_id
+JOIN courses ON courses.course_id = enrollment.course_id;
+SELECT * from enrollment;
+SELECT courses.name, count(enrollment.student_id) FROM courses left JOIN enrollment ON courses.course_id = enrollment.course_id GROUP BY name;
